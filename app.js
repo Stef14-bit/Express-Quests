@@ -15,6 +15,7 @@ app.get("/", welcome);
 
 const movieHandlers = require("./movieHandlers");
 const getUsers = require("./userHandler");
+const { hashPassword } = require("./auth.js");
 
 app.get("/api/movies", movieHandlers.getMovies);
 app.post("/api/movies", validateMovie, movieHandlers.postMovie);
@@ -22,9 +23,9 @@ app.get("/api/movies/:id", movieHandlers.getMovieById);
 app.put("/api/movies/:id", validateMovie, movieHandlers.updateMovie);
 app.delete("/api/movies/:id", movieHandlers.deleteMovie);
 app.get("/api/users", getUsers.getUsers);
-app.post("/api/users", validateUser, getUsers.postUser);
+app.post("/api/users", validateUser, hashPassword, getUsers.postUser);
 app.get("/api/users/:id", getUsers.getUserId);
-app.put("/api/users/:id", validateUser, getUsers.updateUser);
+app.put("/api/users/:id", validateUser, hashPassword, getUsers.updateUser);
 app.delete("/api/users/:id", getUsers.deleteUser);
 
 app.listen(port, (err) => {
