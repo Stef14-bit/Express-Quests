@@ -2,22 +2,24 @@ const argon2 = require("argon2");
 
 const hashingOptions = {
   type: argon2.argon2id,
-
   memoryCost: 2 ** 16,
-
   timeCost: 5,
-
   parallelism: 1,
 };
 
 const hashPassword = (req, res, next) => {
+  if (!req.body.password) {
+    return res.status(400).send("Password is required");
+  }
+
   argon2
     .hash(req.body.password, hashingOptions)
     .then((hashedPassword) => {
       console.log(hashedPassword);
 
-      req.body.hashPassword = hashedPassword;
+      req.body.hashedPassword = hashedPassword;
       delete req.body.password;
+
       next();
     })
     .catch((err) => {
