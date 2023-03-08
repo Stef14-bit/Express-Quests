@@ -18,7 +18,7 @@ const validateMovie = [
 ];
 const validateUser = [
   body("email").isEmail(),
-  body("hashedPassword").isStrongPassword(),
+  body("password").isStrongPassword(),
   body("firstname").isString().isLength({ max: 255 }),
   body("lastname").isString().isLength({ max: 255 }),
   body("email").isEmail().isLength({ max: 255 }),
